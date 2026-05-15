@@ -23,7 +23,8 @@ const CARDS_CONFIG = [
     link: "#novae",
     size: { w: 260, h: 340 },
     zIndex: 2,
-        labelPosition: "top"
+    labelPosition: "top",
+    labelOffset: 0,
 
   },
   {
@@ -45,6 +46,7 @@ const CARDS_CONFIG = [
     link: "#projects",
     size: { w: 260, h: 340 },
     zIndex: 2,
+    labelOffset: 0,
   },
   {
     id: "c5",
@@ -65,12 +67,13 @@ const CARDS_CONFIG = [
     link: "#knowledge-base",
     size: { w: 340, h: 340 },
     zIndex: 2,
-    labelPosition: "top"
+    labelPosition: "top",
+    labelOffset: 18,
   },
 ];
  
  
-export function Navbar() {
+export function Navbar() { 
   return (
     <motion.nav
       initial={{ opacity: 0, y: -12 }}
@@ -78,20 +81,20 @@ export function Navbar() {
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
       style={{
         position: "fixed",
-        top: 0, left: 0, right: 0,
+        top: 8, left: "35%", right: 0,
         zIndex: 100,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         padding: "0 40px",
-        height: "64px",
-        width: "100px",
+        height: "70px",
+        width: "350px",
         backdropFilter: "blur(16px) saturate(1.4)",
         WebkitBackdropFilter: "blur(16px) saturate(1.4)",
         background: "rgba(8,8,8,0.45)",
         borderBottom: "0.5px solid rgba(255,255,255,0.06)",
         margin: 24,
-        borderRadius: 32,
+        borderRadius: 40,
       }}
     >
       {/* Logo */}
@@ -117,7 +120,7 @@ export function Navbar() {
           color: "rgba(255,255,255,0.88)",
           letterSpacing: "0.04em",
         }}>
-          Lumière
+          NOVAe
         </span>
       </div>
     </motion.nav>
@@ -198,8 +201,8 @@ function FloatingCard({ card, index}) {
             style={{
                 position: "absolute",
                 ...(card.labelPosition === "top"
-                    ? { top: -38, bottom: "auto" }
-                    : { bottom: -38, top: "auto" }),
+                    ? { top: card.labelOffset !== undefined ? card.labelOffset : -38, bottom: "auto" }
+                    : { bottom: card.labelOffset !== undefined ? card.labelOffset : -38, top: "auto" }),
                 left: "50%",
                 transform: "translateX(-50%)",
                 whiteSpace: "nowrap",
@@ -337,12 +340,18 @@ export function HeroSection() {
       {/* Minimal center wordmark — decorative only */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, delay: 1.2, ease: "easeOut" }}
+        animate={{ 
+            opacity: 1,
+            y: [0, -6, 0],
+        }}
+        transition={{
+            opacity: { duration: 1.2, delay: 1.2, ease: "easeOut" },
+            y: { duration: 3.2, delay: 2.4, repeat: Infinity, ease: "easeInOut" },
+        }}
         style={{
           position: "absolute",
-          bottom: 18,
-          left: "50%",
+          bottom: 12,
+          left: "41%",
           transform: "translateX(-50%)",
           zIndex: 20,
           display: "flex",
