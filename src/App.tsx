@@ -87,7 +87,7 @@ export function Navbar() {
         alignItems: "center",
         justifyContent: "space-between",
         padding: "0 40px",
-        height: "70px",
+        height: "50px",
         width: "350px",
         backdropFilter: "blur(16px) saturate(1.4)",
         WebkitBackdropFilter: "blur(16px) saturate(1.4)",
@@ -169,8 +169,8 @@ function FloatingCard({ card, index}) {
         style={{
           width: "100%",
           height: "100%",
-          borderRadius: 18,
           overflow: "hidden",
+          borderRadius: 24,
           position: "relative",
           cursor: "pointer",
         }}
