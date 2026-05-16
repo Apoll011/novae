@@ -68,23 +68,56 @@ function ParticleCanvas({ onComplete }: { onComplete: () => void }) {
     ];
 
     // Target cluster: small random spread around center (simulates logo mass)
-    particlesRef.current = Array.from({ length: PARTICLE_COUNT }, (_, i) => {
-      const corner = corners[i % 4];
-      const spread = 180;
-      return {
-        x: corner.x,
-        y: corner.y,
-        sx: corner.x + (Math.random() - 0.5) * 120,
-        sy: corner.y + (Math.random() - 0.5) * 120,
-        tx: cx + (Math.random() - 0.5) * spread,
-        ty: cy + (Math.random() - 0.5) * spread,
-        size: Math.random() * 6 + 4,
-        speed: 0.004 + Math.random() * 0.007,
-        progress: 0,
-        color: COLORS[Math.floor(Math.random() * COLORS.length)],
-        delay: Math.floor(Math.random() * 28),
-      };
-    });
+    const E_GRID = [
+  [0,1,1,1,1,0],
+  [1,0,0,0,0,1],
+  [1,0,0,0,0,0],
+  [1,1,1,1,1,1],
+  [1,0,0,0,0,0],
+  [1,0,0,0,0,1],
+  [0,1,1,1,1,0],
+];
+
+const CELL_SIZE = 26;
+const GRID_ROWS = E_GRID.length;
+const GRID_COLS = E_GRID[0].length;
+const GRID_W = GRID_COLS * CELL_SIZE;
+const GRID_H = GRID_ROWS * CELL_SIZE;
+const GRID_ORIGIN_X = cx - GRID_W / 2;
+const GRID_ORIGIN_Y = cy - GRID_H / 2;
+
+// Collect all lit cells as possible targets
+const eTargets: { x: number; y: number }[] = [];
+for (let row = 0; row < GRID_ROWS; row++) {
+  for (let col = 0; col < GRID_COLS; col++) {
+    if (E_GRID[row][col] === 1) {
+      eTargets.push({
+        x: GRID_ORIGIN_X + col * CELL_SIZE + CELL_SIZE / 2,
+        y: GRID_ORIGIN_Y + row * CELL_SIZE + CELL_SIZE / 2,
+      });
+    }
+  }
+}
+
+// Assign each particle a target cell (cycling through available cells)
+particlesRef.current = Array.from({ length: PARTICLE_COUNT }, (_, i) => {
+  const corner = corners[i % 4];
+  const target = eTargets[i % eTargets.length];
+  const jitter = 4;
+  return {
+    x: corner.x,
+    y: corner.y,
+    sx: corner.x + (Math.random() - 0.5) * 120,
+    sy: corner.y + (Math.random() - 0.5) * 120,
+    tx: target.x + (Math.random() - 0.5) * jitter,
+    ty: target.y + (Math.random() - 0.5) * jitter,
+    size: Math.random() * 10 + 8,
+    speed: 0.004 + Math.random() * 0.007,
+    progress: 0,
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    delay: Math.floor(Math.random() * 28),
+  };
+});
 
     const draw = (timestamp: number) => {
       if (!startTimeRef.current) startTimeRef.current = timestamp;
@@ -127,11 +160,12 @@ function ParticleCanvas({ onComplete }: { onComplete: () => void }) {
         ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
       });
 
-      if (allArrived && !doneRef.current) {
-        doneRef.current = true;
-        onComplete();
-        return;
-      }
+      const arrivedCount = particlesRef.current.filter(p => p.progress >= 1).length;
+if (arrivedCount >= Math.floor(PARTICLE_COUNT * 0.75) && !doneRef.current) {
+  doneRef.current = true;
+  onComplete();
+  return;
+}
 
       frameRef.current = requestAnimationFrame(draw);
     };
@@ -251,7 +285,7 @@ export function LoadingOverlay({ onRevealComplete }: LoadingOverlayProps) {
               opacity: logoScale,
               scale: logoScale === 1 ? 1 : 0.6,
             }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             style={{
               position: "relative",
               zIndex: 3,
@@ -268,7 +302,7 @@ export function LoadingOverlay({ onRevealComplete }: LoadingOverlayProps) {
                 height: 400,
                 objectFit: "contain",
                 filter:
-                  "drop-shadow(0 0 32px rgba(204,255,0,0.5)) drop-shadow(0 0 8px rgba(204,255,0,0.8))",
+                  "drop-shadow(0 0 12px rgba(204,255,0,0.25)) drop-shadow(0 0 4px rgba(204,255,0,0.35))",
               }}
             />
 
