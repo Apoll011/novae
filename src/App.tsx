@@ -32,7 +32,7 @@ const CARDS_CONFIG = [
     id: "c3",
     label: "Newsletter",
     image: "images/newsletter.png",
-    position: { top: "-12%", right: "-22%" },
+    position: { top: "-6%", right: "-22%" },
     rotation: 20,
     link: "#newsletter",
     size: { w: 880, h: 380 },
@@ -43,7 +43,7 @@ const CARDS_CONFIG = [
   {
     id: "c4",
     label: "Projects",
-    image: "images/notebook3.png",
+    image: "images/notebook.png",
     position: { bottom: "38%", right: "68%" },
     rotation: -15,
     link: "#projects",
@@ -56,7 +56,7 @@ const CARDS_CONFIG = [
     id: "c5",
     label: "Meet the Team",
     image: "images/photo.png",
-    position: { bottom: "14%", left: "66%" },
+    position: { bottom: "10%", left: "66%" },
     rotation: 15,
     link: "#team",
     size: { w: 420, h: 330 },
@@ -87,20 +87,20 @@ export function Navbar() {
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
       style={{
         position: "fixed",
-        top: 8, left: "35%", right: 0,
+        top: -10, left: "80%", right: 0,
         zIndex: 100,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         padding: "0 40px",
-        height: "50px",
-        width: "350px",
+        height: "40px",
+        width: "125px",
         backdropFilter: "blur(16px) saturate(1.4)",
         WebkitBackdropFilter: "blur(16px) saturate(1.4)",
-        background: "rgba(8,8,8,0.45)",
+        background: "rgb(255, 255, 255)",
         borderBottom: "0.5px solid rgba(255,255,255,0.06)",
         margin: 24,
-        borderRadius: 40,
+        borderRadius: 100,
       }}
     >
       {/* Logo */}
