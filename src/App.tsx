@@ -7,68 +7,74 @@ const CARDS_CONFIG = [
     id: "c1",
     label: "Partnerships",
     image: "images/cards.png",
-    position: { top: "70%", left: "40%" },
+    position: { top: "58%", left: "32%" },
     rotation: 10,
     link: "#partnerships",
-    size: { w: 260, h: 160 },
+    size: { w: 480, h: 290 },
     zIndex: 3,
-    labelPosition: "top"
+    labelPosition: "top",
+    labelOffset: 40,
   },
   {
     id: "c2",
     label: "NOVAe",
-    image: "images/e.png",
-    position: { top: "20%", left: "40%" },
+    image: "images/novae.png",
+    position: { top: "0%", left: "25%" },
     rotation: 2.0,
     link: "#novae",
-    size: { w: 260, h: 340 },
+    size: { w: 630, h: 540 },
     zIndex: 2,
     labelPosition: "top",
-    labelOffset: 0,
+    labelOffset: 90,
 
   },
   {
     id: "c3",
     label: "Newsletter",
     image: "images/newsletter.png",
-    position: { top: "8%", right: "-4%" },
+    position: { top: "-12%", right: "-22%" },
     rotation: 20,
     link: "#newsletter",
-    size: { w: 400, h: 150 },
+    size: { w: 880, h: 380 },
     zIndex: 4,
+    labelOffset: 90,
+    labelPosition: "bottom",
   },
   {
     id: "c4",
     label: "Projects",
     image: "images/notebook.png",
-    position: { bottom: "48%", right: "70%" },
+    position: { bottom: "38%", right: "68%" },
     rotation: -15,
     link: "#projects",
-    size: { w: 260, h: 340 },
+    size: { w: 370, h: 450 },
     zIndex: 2,
-    labelOffset: 0,
+    labelOffset: 40,
+    labelPosition: "bottom",
   },
   {
     id: "c5",
     label: "Meet the Team",
     image: "images/photo.png",
-    position: { bottom: "20%", left: "65%" },
-    rotation: 10,
+    position: { bottom: "14%", left: "66%" },
+    rotation: 15,
     link: "#team",
-    size: { w: 350, h: 260 },
+    size: { w: 420, h: 330 },
     zIndex: 3,
+    labelOffset: 10,
+    labelPosition: "bottom",
   },
   {
     id: "c6",
     label: "Knowledge Base",
     image: "images/folder.png",
-    position: { bottom: "-8%", right: "70%" },
-    rotation: -5,
+    position: { bottom: "-38%", right: "58%" },
+    rotation: -2,
     link: "#knowledge-base",
-    size: { w: 340, h: 340 },
+    size: { w: 665, h: 665 },
     zIndex: 2,
     labelPosition: "top",
-    labelOffset: 18,
+    labelOffset: 130,
   },
 ];
  
@@ -169,21 +175,30 @@ function FloatingCard({ card, index}) {
         style={{
           width: "100%",
           height: "100%",
-          overflow: "hidden",
-          borderRadius: 24,
+          
+          
           position: "relative",
           cursor: "pointer",
         }}
         transition={{ duration: 0.4, ease: "easeOut" }}
       >
         {/* Background image */}
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `url(${card.image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }} />
+<img
+  src={card.image}
+  alt={card.label}
+  style={{
+    position: "absolute",
+    inset: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
+    pointerEvents: "none",
+    filter: isHovered
+      ? "drop-shadow(-7px 8px 10px rgba(0,0,0,0.70)) drop-shadow(-3px 3px 4px rgba(0,0,0,0.50))"
+      : "drop-shadow(-12px 20px 10px rgba(0,0,0,0.85)) drop-shadow(-3px 3px 4px rgba(0,0,0,0.50))",
+    transition: "filter 0.4s ease",
+  }}
+/>
  
        
 
@@ -201,8 +216,8 @@ function FloatingCard({ card, index}) {
             style={{
                 position: "absolute",
                 ...(card.labelPosition === "top"
-                    ? { top: card.labelOffset !== undefined ? card.labelOffset : -38, bottom: "auto" }
-                    : { bottom: card.labelOffset !== undefined ? card.labelOffset : -38, top: "auto" }),
+                  ? { top: (card.labelOffset ?? 12), bottom: "auto" }
+                  : { bottom: (card.labelOffset ?? 12), top: "auto" }),
                 left: "50%",
                 transform: "translateX(-50%)",
                 whiteSpace: "nowrap",
@@ -361,17 +376,12 @@ export function HeroSection() {
           pointerEvents: "none",
         }}
       >
-        <div style={{
-          width: 1,
-          height: 32,
-          background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.2))",
-        }} />
         <span style={{
           fontFamily: "'DM Sans', sans-serif",
           fontSize: "11px",
           fontWeight: 300,
           letterSpacing: "0.22em",
-          color: "rgba(255,255,255,0.22)",
+          color: "rgba(255,255,255,0.65)",
           textTransform: "uppercase",
         }}>
           Click on the elements to explore
