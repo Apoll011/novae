@@ -74,7 +74,7 @@ const CARDS_CONFIG = [
     size: { w: 480, h: 480 },
     zIndex: 2,
     labelPosition: "top",
-    labelOffset: 130,
+    labelOffset: 50,
   },
 ];
  
