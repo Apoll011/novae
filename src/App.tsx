@@ -1,6 +1,6 @@
-import { motion, AnimatePresence, useMotionValue } from "motion/react"
+import { motion, AnimatePresence } from "motion/react"
 import { useState } from "react";
- 
+import { LoadingOverlay } from "./LoadingOverlay";
  
 const CARDS_CONFIG = [
   {
@@ -85,48 +85,52 @@ export function Navbar() {
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+      onClick={() => window.location.href = "#"}
       style={{
+        cursor: "pointer",
         position: "fixed",
-        top: -10, left: "80%", right: 0,
+        top: -10, left: "84%", right: 0,
         zIndex: 100,
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "center",
         padding: "0 40px",
         height: "40px",
-        width: "125px",
+        width: "80px",
         backdropFilter: "blur(16px) saturate(1.4)",
         WebkitBackdropFilter: "blur(16px) saturate(1.4)",
-        background: "rgb(255, 255, 255)",
-        borderBottom: "0.5px solid rgba(255,255,255,0.06)",
+        background: "rgb(255, 255, 255, 0.08)",
+        boxShadow: "0 6px 16px rgba(0,0,0,0.18)",
         margin: 24,
-        borderRadius: 100,
+        borderRadius: 40,
       }}
     >
       {/* Logo */}
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <div style={{
-          width: 28, height: 28,
-          borderRadius: 8,
-          background: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 100%)",
-          border: "0.5px solid rgba(255,255,255,0.14)",
-          display: "flex", alignItems: "center", justifyContent: "center",
+          display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
         }}>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <rect x="1" y="1" width="5" height="5" rx="1.5" fill="rgba(255,255,255,0.7)" />
-            <rect x="8" y="1" width="5" height="5" rx="1.5" fill="rgba(255,255,255,0.35)" />
-            <rect x="1" y="8" width="5" height="5" rx="1.5" fill="rgba(255,255,255,0.35)" />
-            <rect x="8" y="8" width="5" height="5" rx="1.5" fill="rgba(255,255,255,0.7)" />
-          </svg>
+          <img
+      src="images/console.png"
+      alt="Minigames"
+      style={{
+        width: 25,
+        height: 25,
+        objectFit: "contain",
+      }}
+    />
         </div>
         <span style={{
-          fontFamily: "'Cormorant Garamond', serif",
+          fontFamily: "'Inter', sans-serif",
           fontWeight: 300,
-          fontSize: "18px",
+          fontSize: "15px",
           color: "rgba(255,255,255,0.88)",
           letterSpacing: "0.04em",
+          whiteSpace: "nowrap",
         }}>
-          NOVAe
+          Mini Games
         </span>
       </div>
     </motion.nav>
@@ -390,4 +394,26 @@ export function HeroSection() {
     </section>
   );
 }
- 
+
+export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  return (
+    <>
+      <AnimatePresence>
+        {isLoading && (
+          <LoadingOverlay onRevealComplete={() => setIsLoading(false)} />
+        )}
+      </AnimatePresence>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isLoading ? 0 : 1 }}
+        transition={{ duration: 2.8, ease: "easeOut", delay: 0 }}
+      >
+        <Navbar />
+        <HeroSection />
+      </motion.div>
+    </>
+  );
+}
