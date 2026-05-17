@@ -31,10 +31,6 @@ const FADE_DURATION_MS = 1000;
 
 const COLORS = [
   "rgba(204, 255, 0, 0.9)",   // NOVAe yellow-green
-  "rgba(204, 255, 0, 0.6)",
-  "rgba(255, 255, 255, 0.7)",
-  "rgba(180, 230, 0, 0.8)",
-  "rgba(255, 255, 255, 0.4)",
 ];
 
 // ─── PARTICLE CANVAS ──────────────────────────────────────────────────────────
@@ -69,16 +65,21 @@ function ParticleCanvas({ onComplete }: { onComplete: () => void }) {
 
     // Target cluster: small random spread around center (simulates logo mass)
     const E_GRID = [
-  [0,1,1,1,1,0],
-  [1,0,0,0,0,1],
-  [1,0,0,0,0,0],
-  [1,1,1,1,1,1],
-  [1,0,0,0,0,0],
-  [1,0,0,0,0,1],
-  [0,1,1,1,1,0],
+  [0,0,1,1,1,1,0,0],
+  [0,1,1,1,1,1,1,0],
+  [1,1,0,1,1,0,1,1],
+  [1,1,0,0,0,0,1,1],
+  [1,1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,1,1],
+  [1,1,0,0,0,0,0,0],
+  [1,1,0,0,0,0,1,1],
+  [0,1,1,1,1,1,1,0],
+  [0,0,1,1,1,1,0,0],
+  [0,0,0,0,0,0,0,0],
+  [0,1,1,1,1,1,1,0],
 ];
 
-const CELL_SIZE = 26;
+const CELL_SIZE = 22;
 const GRID_ROWS = E_GRID.length;
 const GRID_COLS = E_GRID[0].length;
 const GRID_W = GRID_COLS * CELL_SIZE;
@@ -163,8 +164,9 @@ particlesRef.current = Array.from({ length: PARTICLE_COUNT }, (_, i) => {
       const arrivedCount = particlesRef.current.filter(p => p.progress >= 1).length;
 if (arrivedCount >= Math.floor(PARTICLE_COUNT * 0.75) && !doneRef.current) {
   doneRef.current = true;
-  onComplete();
-  return;
+  setTimeout(() => {
+    onComplete();
+  }, 800);
 }
 
       frameRef.current = requestAnimationFrame(draw);
@@ -283,7 +285,7 @@ export function LoadingOverlay({ onRevealComplete }: LoadingOverlayProps) {
             initial={{ opacity: 0, scale: 0.6 }}
             animate={{
               opacity: logoScale,
-              scale: logoScale === 1 ? 1 : 0.6,
+              scale: 1,
             }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             style={{

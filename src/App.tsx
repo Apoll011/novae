@@ -1,6 +1,7 @@
-import { motion, AnimatePresence } from "motion/react"
+import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { LoadingOverlay } from "./LoadingOverlay";
+import { EntryScreen } from "./EntryScreen";
 
  
 const CARDS_CONFIG = [
@@ -397,19 +398,32 @@ export function HeroSection() {
 }
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [stage, setStage] = useState<"entry" | "loading" | "ready">("entry");
+
+  const handleEnter = () => {
+    const audio = new Audio("images/audio2.mp3");
+    audio.volume = 1.0;
+    audio.play().catch(() => {});
+    setStage("loading");
+  };
 
   return (
     <>
       <AnimatePresence>
-        {isLoading && (
-          <LoadingOverlay onRevealComplete={() => setIsLoading(false)} />
+        {stage === "entry" && (
+          <EntryScreen onEnter={handleEnter} />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {stage === "loading" && (
+          <LoadingOverlay onRevealComplete={() => setStage("ready")} />
         )}
       </AnimatePresence>
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: isLoading ? 0 : 1 }}
+        animate={{ opacity: stage === "ready" ? 1 : 0 }}
         transition={{ duration: 2.8, ease: "easeOut", delay: 0 }}
       >
         <Navbar />
