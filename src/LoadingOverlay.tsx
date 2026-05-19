@@ -15,7 +15,7 @@ interface ParticleInit {
 
 const HOLD_DURATION_MS = 2000;
 const FADE_DURATION_MS = 1600;
-const DISPLAY_SIZE = 300;
+const DISPLAY_SIZE = 400;
 const SAMPLE_STEP = 4;
 const AMBIENT_COUNT = 80;
 
@@ -197,7 +197,7 @@ function ParticleCanvas({
         const breathe = 0.5 + 0.5 * Math.sin(elapsed * 0.0025);
 
         ctx.globalAlpha = 0.06 + breathe * 0.05;
-        const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, DISPLAY_SIZE * 0.9);
+        const grad = ctx.createRadialGradient(cx, cy - 30, 10, cx, cy, DISPLAY_SIZE * 0.9);
         grad.addColorStop(0, "rgba(204,255,0,0.5)");
         grad.addColorStop(0.4, "rgba(204,255,0,0.15)");
         grad.addColorStop(1, "transparent");
@@ -212,7 +212,7 @@ function ParticleCanvas({
           const fp = flashRef.current.progress;
           // Bright center flash
           ctx.globalAlpha = (1 - fp) * 0.5;
-          const flashGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, DISPLAY_SIZE * (0.5 + fp * 1.5));
+          const flashGrad = ctx.createRadialGradient(cx, cy - 30, 0, cx, cy, DISPLAY_SIZE * (0.5 + fp * 1.5));
           flashGrad.addColorStop(0, "rgba(255,255,255,0.8)");
           flashGrad.addColorStop(0.3, "rgba(204,255,0,0.3)");
           flashGrad.addColorStop(1, "transparent");
@@ -299,7 +299,7 @@ export function LoadingOverlay({ onRevealComplete }: LoadingOverlayProps) {
       const cxPage = W / 2;
       const cyPage = H / 2;
       const originX = cxPage - DISPLAY_SIZE / 2;
-      const originY = cyPage - DISPLAY_SIZE / 2;
+      const originY = cyPage - DISPLAY_SIZE / 2 - 30; // slight upward offset for better centering
 
       const corners = [
         { x: -120, y: -120 },
@@ -344,7 +344,7 @@ export function LoadingOverlay({ onRevealComplete }: LoadingOverlayProps) {
             result.push({
               tx, ty, sx, sy, cpx, cpy,
               size: SAMPLE_STEP,
-              speed: 0.003 + Math.random() * 0.006,
+              speed: 0.004 + Math.random() * 0.008,
               r, g, b,
               delay: Math.floor(Math.random() * 25 + (dist / maxDist) * 25),
             });

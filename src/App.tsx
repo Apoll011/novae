@@ -9,22 +9,22 @@ const CARDS_CONFIG = [
     id: "c1",
     label: "Partnerships",
     image: "images/cards.png",
-    position: { top: "58%", left: "32%" },
+    position: { top: "62%", left: "33%" },
     rotation: 10,
     link: "#partnerships",
-    size: { w: 450, h: 260 },
+    size: { w: 430, h: 240 },
     zIndex: 3,
     labelPosition: "top",
-    labelOffset: 40,
+    labelOffset: 30,
   },
   {
     id: "c2",
     label: "NOVAe",
     image: "images/novae.png",
-    position: { top: "5%", left: "28%" },
+    position: { top: "10%", left: "30%" },
     rotation: 15,
     link: "#novae",
-    size: { w: 550, h: 460 },
+    size: { w: 520, h: 430 },
     zIndex: 2,
     labelPosition: "top",
     labelOffset: 70,
@@ -37,7 +37,7 @@ const CARDS_CONFIG = [
     position: { top: "25%", right: "-12%" },
     rotation: 20,
     link: "#newsletter",
-    size: { w: 735, h: 335 },
+    size: { w: 730, h: 330 },
     zIndex: 4,
     labelOffset: 90,
     labelPosition: "bottom",
@@ -58,7 +58,7 @@ const CARDS_CONFIG = [
     id: "c5",
     label: "Meet the Team",
     image: "images/photo.png",
-    position: { bottom: "-8%", left: "0%" },
+    position: { bottom: "-5%", left: "0%" },
     rotation: -15,
     link: "#team",
     size: { w: 430, h: 340 },
@@ -73,10 +73,10 @@ const CARDS_CONFIG = [
     position: { bottom: "-30%", right: "0%" },
     rotation: 20,
     link: "#knowledge-base",
-    size: { w: 450, h: 450 },
+    size: { w: 440, h: 440 },
     zIndex: 2,
     labelPosition: "top",
-    labelOffset: 50,
+    labelOffset: 40,
   },
 {
     id: "c7",
@@ -85,10 +85,10 @@ const CARDS_CONFIG = [
     position: { bottom: "44%", right: "-5%" },
     rotation: 15,
     link: "#daily-games",
-    size: { w: 380, h: 380 },
+    size: { w: 350, h: 350 },
     zIndex: 2,
     labelPosition: "bottom",
-    labelOffset: 65,
+    labelOffset: 55,
   },
 ];
  
@@ -432,7 +432,7 @@ export default function App() {
   const [stage, setStage] = useState<"entry" | "loading" | "ready">("entry");
 
   const handleEnter = () => {
-    const audio = new Audio("images/audio2.mp3");
+    const audio = new Audio("images/audio4.mp3");
     audio.volume = 1.0;
     audio.play().catch(() => {});
     setStage("loading");
