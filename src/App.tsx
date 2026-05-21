@@ -21,7 +21,7 @@ const CARDS_CONFIG = [
     id: "c2",
     label: "NOVAe",
     image: "images/novae.png",
-    position: { top: "10%", left: "30%" },
+    position: { top: "12%", left: "30%" },
     rotation: 15,
     link: "#novae",
     size: { w: 520, h: 430 },
@@ -34,10 +34,10 @@ const CARDS_CONFIG = [
     id: "c3",
     label: "Newsletter",
     image: "images/newsletter.png",
-    position: { top: "25%", right: "-12%" },
-    rotation: 20,
+    position: { top: "60%", right: "55%" },
+    rotation: -20,
     link: "#newsletter",
-    size: { w: 730, h: 330 },
+    size: { w: 720, h: 320 },
     zIndex: 4,
     labelOffset: 90,
     labelPosition: "bottom",
@@ -46,10 +46,10 @@ const CARDS_CONFIG = [
     id: "c4",
     label: "Projects",
     image: "images/notebook.png",
-    position: { bottom: "40%", right: "73%" },
+    position: { bottom: "15%", right: "76%" },
     rotation: -15,
     link: "#projects",
-    size: { w: 330, h: 410 },
+    size: { w: 300, h: 380 },
     zIndex: 2,
     labelOffset: 40,
     labelPosition: "bottom",
@@ -58,37 +58,37 @@ const CARDS_CONFIG = [
     id: "c5",
     label: "Meet the Team",
     image: "images/photo.png",
-    position: { bottom: "-5%", left: "0%" },
-    rotation: -15,
+    position: { bottom: "40%", left: "75%" },
+    rotation: 15,
     link: "#team",
-    size: { w: 430, h: 340 },
+    size: { w: 380, h: 290 },
     zIndex: 3,
-    labelOffset: 25,
-    labelPosition: "top",
+    labelOffset: 18,
+    labelPosition: "bottom",
   },
   {
     id: "c6",
     label: "Knowledge Base",
     image: "images/folder2.png",
-    position: { bottom: "-30%", right: "0%" },
+    position: { bottom: "-25%", right: "0%" },
     rotation: 20,
     link: "#knowledge-base",
-    size: { w: 440, h: 440 },
+    size: { w: 410, h: 410 },
     zIndex: 2,
     labelPosition: "top",
     labelOffset: 40,
   },
-{
+  {
     id: "c7",
-    label: "Daily Games",
-    image: "images/videogame.png",
-    position: { bottom: "44%", right: "-5%" },
+    label: "Current Project",
+    image: "images/note.png",
+    position: { bottom: "42%", right: "20%" },
     rotation: 15,
-    link: "#daily-games",
-    size: { w: 350, h: 350 },
+    link: "#current-project",
+    size: { w: 200, h: 200 },
     zIndex: 2,
     labelPosition: "bottom",
-    labelOffset: 55,
+    labelOffset: 6,
   },
 ];
  
@@ -295,7 +295,7 @@ export function HeroSection() {
       <div style={{
   position: "absolute",
   inset: 0,
-  background: "url('images/background3.png')",
+  background: "url('images/background.png')",
   zIndex: 0,
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
@@ -314,6 +314,55 @@ export function HeroSection() {
         pointerEvents: "none",
       }} />
  
+ {/* Slogan */}
+      <motion.img
+  src="images/slogan.png"
+  alt="BUILD SOMETHING"
+  initial={{ opacity: 0, y: -10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{
+    duration: 1,
+    delay: 1.1,
+    ease: [0.16, 1, 0.3, 1],
+  }}
+  style={{
+    position: "absolute",
+    top: -220,
+    left: -190,
+    zIndex: 15,
+    width: 1100, // adjust depending on your design
+    height: "auto",
+    pointerEvents: "none",
+    userSelect: "none",
+  }}
+
+
+/>
+
+{/* Logo */}
+      <motion.img
+  src="images/logo.png"
+  alt="NOVAe"
+  initial={{ opacity: 0, y: -10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{
+    duration: 1,
+    delay: 1.1,
+    ease: [0.16, 1, 0.3, 1],
+  }}
+  style={{
+    position: "absolute",
+    top: 35,
+    left: 450,
+    zIndex: 15,
+    width: 120, // adjust depending on your design
+    height: "auto",
+    pointerEvents: "none",
+    userSelect: "none",
+  }}
+
+
+/>
       {/* Center fine grid decoration */}
       <motion.div
         initial={{ opacity: 0 }}

@@ -197,7 +197,7 @@ function ParticleCanvas({
         const breathe = 0.5 + 0.5 * Math.sin(elapsed * 0.0025);
 
         ctx.globalAlpha = 0.06 + breathe * 0.05;
-        const grad = ctx.createRadialGradient(cx, cy - 30, 10, cx, cy, DISPLAY_SIZE * 0.9);
+        const grad = ctx.createRadialGradient(cx, cy - 20, 10, cx, cy, DISPLAY_SIZE * 0.9);
         grad.addColorStop(0, "rgba(204,255,0,0.5)");
         grad.addColorStop(0.4, "rgba(204,255,0,0.15)");
         grad.addColorStop(1, "transparent");
@@ -299,7 +299,7 @@ export function LoadingOverlay({ onRevealComplete }: LoadingOverlayProps) {
       const cxPage = W / 2;
       const cyPage = H / 2;
       const originX = cxPage - DISPLAY_SIZE / 2;
-      const originY = cyPage - DISPLAY_SIZE / 2 - 30; // slight upward offset for better centering
+      const originY = cyPage - DISPLAY_SIZE / 2 - 20; // slight upward offset for better centering
 
       const corners = [
         { x: -120, y: -120 },
