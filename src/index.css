@@ -8,30 +8,14 @@ body {
   background: black;
 }
 
-/* ─── Tablet Landscape ─────────────────────────────────────── */
 @media (max-width: 1180px) and (orientation: landscape) {
-  .hero-content {
-    transform: scale(0.40);
-    transform-origin: top center;
-
-    .glass-box {
-      transform: scale(0.75);
-      transform-origin: bottom left;
-      bottom: 20px !important;
-      left: 20px !important;
-    }
-  }
-
-  /* Scale down the frosted glass box */
-  .hero-section .glass-box {
-    transform: scale(0.85);
-    transform-origin: bottom left;
+  .hero-section {
+    zoom: 0.65;
   }
 }
 
 @media (max-width: 900px) and (orientation: landscape) {
-  .hero-content {
-    transform: scale(0.50);
-    transform-origin: top center;
+  .hero-section {
+    zoom: 0.50;
   }
 }

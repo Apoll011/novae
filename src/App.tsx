@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect } from "react";
 import { LoadingOverlay } from "./LoadingOverlay";
 import { EntryScreen } from "./EntryScreen";
+import { UnsupportedScreen } from "./UnsupportedScreen";
 
  
 const CARDS_CONFIG = [
@@ -568,8 +569,23 @@ export default function App() {
     setStage("loading");
   };
 
+  const [isSupported, setIsSupported] = useState(
+  window.innerWidth >= 1024
+);
+
+useEffect(() => {
+  const check = () => setIsSupported(window.innerWidth >= 1024);
+  window.addEventListener("resize", check);
+  window.addEventListener("orientationchange", check);
+  return () => {
+    window.removeEventListener("resize", check);
+    window.removeEventListener("orientationchange", check);
+  };
+}, []);
+
   return (
     <>
+      {!isSupported && <UnsupportedScreen />}
       <AnimatePresence>
         {stage === "entry" && (
           <EntryScreen onEnter={handleEnter} />
