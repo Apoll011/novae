@@ -12,7 +12,7 @@ const CARDS_CONFIG = [
     position: { top: "65%", left: "35%" },
     rotation: 5,
     link: "#partnerships",
-    size: { w: 410, h: 220 },
+    size: { w: 390, h: 200 },
     zIndex: 3,
     labelPosition: "top",
     labelOffset: 30,
@@ -21,10 +21,10 @@ const CARDS_CONFIG = [
     id: "c2",
     label: "NOVAe",
     image: "images/novae.png",
-    position: { top: "12%", left: "30%" },
+    position: { top: "14%", left: "31%" },
     rotation: 15,
     link: "#novae",
-    size: { w: 510, h: 420 },
+    size: { w: 490, h: 400 },
     zIndex: 2,
     labelPosition: "top",
     labelOffset: 60,
@@ -34,34 +34,23 @@ const CARDS_CONFIG = [
     id: "c3",
     label: "Newsletter",
     image: "images/newsletter.png",
-    position: { top: "60%", right: "58%" },
+    position: { top: "10%", right: "58%" },
     rotation: -20,
     link: "#newsletter",
-    size: { w: 700, h: 300 },
+    size: { w: 690, h: 290 },
     zIndex: 4,
     labelOffset: 70,
     labelPosition: "bottom",
   },
-  {
-    id: "c4",
-    label: "Projects",
-    image: "images/notebook.png",
-    position: { bottom: "20%", right: "76%" },
-    rotation: -15,
-    link: "#projects",
-    size: { w: 270, h: 350 },
-    zIndex: 2,
-    labelOffset: 30,
-    labelPosition: "bottom",
-  },
+  
   {
     id: "c5",
     label: "Meet the Team",
     image: "images/team.png",
-    position: { bottom: "40%", left: "75%" },
-    rotation: 15,
+    position: { bottom: "40%", left: "74%" },
+    rotation: 10,
     link: "#team",
-    size: { w: 370, h: 280 },
+    size: { w: 360, h: 270 },
     zIndex: 3,
     labelOffset: 15,
     labelPosition: "bottom",
@@ -70,22 +59,34 @@ const CARDS_CONFIG = [
     id: "c6",
     label: "Knowledge Base",
     image: "images/folder2.png",
-    position: { bottom: "-27%", right: "-2%" },
+    position: { bottom: "-22%", right: "-4%" },
     rotation: 20,
     link: "#knowledge-base",
-    size: { w: 390, h: 390 },
+    size: { w: 370, h: 370 },
     zIndex: 2,
     labelPosition: "bottom",
     labelOffset: 200,
   },
   {
+    id: "c4",
+    label: "Projects",
+    image: "images/notebook3.png",
+    position: { bottom: "-16%", right: "17%" },
+    rotation: -8,
+    link: "#projects",
+    size: { w: 280, h: 360 },
+    zIndex: 2,
+    labelOffset: 30,
+    labelPosition: "top",
+  },
+  {
     id: "c7",
     label: "Current Project",
     image: "images/note.png",
-    position: { bottom: "42%", right: "20%" },
-    rotation: 15,
+    position: { bottom: "42%", right: "22%" },
+    rotation: 10,
     link: "#current-project",
-    size: { w: 190, h: 190 },
+    size: { w: 185, h: 185 },
     zIndex: 2,
     labelPosition: "bottom",
     labelOffset: 6,
@@ -112,7 +113,7 @@ function NavLink({ label, href }: { label: string; href: string }) {
       style={{
         position: "relative",
         fontFamily: "'DM Sans', sans-serif",
-        fontSize: "11px",
+        fontSize: "12px",
         fontWeight: 400,
         letterSpacing: "0.08em",
         textTransform: "uppercase",
@@ -327,8 +328,8 @@ export function HeroSection() {
         pointerEvents: "none",
       }} />
  
- {/* Slogan */}
-      <motion.img
+ 
+      {/* <motion.img
   src="images/slogan.png"
   alt="BUILD SOMETHING"
   initial={{ opacity: 0, y: -10 }}
@@ -350,10 +351,10 @@ export function HeroSection() {
   }}
 
 
-/>
+/> */}
 
-{/* Logo */}
-      <motion.img
+
+  <motion.img
   src="images/logo.png"
   alt="NOVAe"
   initial={{ opacity: 0, y: -10 }}
@@ -365,10 +366,10 @@ export function HeroSection() {
   }}
   style={{
     position: "absolute",
-    top: 30,
-    left: 480,
+    top: 0,
+    left: 50,
     zIndex: 15,
-    width: 120, // adjust depending on your design
+    width: 180, // adjust depending on your design
     height: "auto",
     pointerEvents: "none",
     userSelect: "none",
@@ -486,6 +487,69 @@ export function HeroSection() {
           Click on the elements to explore
         </span>
       </motion.div>
+      {/* Frosted glass text box */}
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1.0, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
+  style={{
+    position: "absolute",
+    bottom: 40,
+    left: 40,
+    zIndex: 20,
+    width: 240,
+    backdropFilter: "blur(24px) saturate(1.4)",
+    WebkitBackdropFilter: "blur(24px) saturate(1.4)",
+    background: "rgba(255,255,255,0.08)",
+    border: "0.5px solid rgba(255,255,255,0.14)",
+    borderRadius: 16,
+    padding: "28px 24px",
+    pointerEvents: "none",
+  }}
+>
+  {/* Headline */}
+  <p style={{
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: "22px",
+    fontWeight: 700,
+    lineHeight: 1.25,
+    color: "rgba(255,255,255,0.92)",
+    letterSpacing: "0.01em",
+    textTransform: "uppercase",
+    margin: 0,
+  }}>
+    YOUR HEADLINE<br />
+    GOES HERE,<br />
+    REPLACE THIS<br />
+    TEXT.
+  </p>
+
+  {/* Divider */}
+  <div style={{
+    width: "100%",
+    height: "0.5px",
+    background: "rgba(255,255,255,0.18)",
+    margin: "20px 0",
+    borderStyle: "dashed",
+    borderWidth: "0.5px 0 0 0",
+    borderColor: "rgba(255,255,255,0.18)",
+  }} />
+
+  {/* Subtitle */}
+  <p style={{
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: "13px",
+    fontWeight: 300,
+    fontStyle: "italic",
+    lineHeight: 1.6,
+    color: "rgba(255,255,255,0.62)",
+    textAlign: "right",
+    margin: 0,
+  }}>
+    Your smaller subtitle<br />
+    text goes here.
+  </p>
+</motion.div>
     </section>
   );
 }
