@@ -13,19 +13,19 @@ body {
 
   .hero-content {
     transform: scale(0.72);
-    transform-origin: top center;
-    width: 139%;
-    height: 139%;
-    left: -19%;
+    transform-origin: top left;
+  }
+
+  /* Scale down the frosted glass box */
+  .hero-section .glass-box {
+    transform: scale(0.85);
+    transform-origin: bottom left;
   }
 }
 
 @media (max-width: 900px) and (orientation: landscape) {
   .hero-content {
     transform: scale(0.58);
-    transform-origin: top center;
-    width: 172%;
-    height: 172%;
-    left: -36%;
+    transform-origin: top left;
   }
 }
