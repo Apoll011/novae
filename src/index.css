@@ -7,3 +7,24 @@ body {
   overflow: hidden;
   background: black;
 }
+
+/* ─── Tablet Landscape Scaling ──────────────────────────────── */
+
+/* Only apply on touch devices to avoid affecting PC browsers */
+@media (pointer: coarse) and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+  .hero-scale-root {
+    transform: scale(0.78);
+    transform-origin: top left;
+    width: calc(100vw / 0.78);
+    height: calc(100vh / 0.78);
+  }
+}
+
+@media (pointer: coarse) and (min-width: 1024px) and (max-width: 1180px) and (orientation: landscape) {
+  .hero-scale-root {
+    transform: scale(0.68);
+    transform-origin: top left;
+    width: calc(100vw / 0.68);
+    height: calc(100vh / 0.68);
+  }
+}

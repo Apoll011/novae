@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect } from "react";
 import { LoadingOverlay } from "./LoadingOverlay";
 import { EntryScreen } from "./EntryScreen";
+import { UnsupportedScreen } from "./UnsupportedScreen";
 
  
 const CARDS_CONFIG = [
@@ -568,28 +569,61 @@ export default function App() {
     setStage("loading");
   };
 
+  const [screenStatus, setScreenStatus] = useState<"ok" | "unsupported" | "rotate">(() => {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const isLandscape = w > h;
+  if (w >= 1024 && isLandscape) return "ok";
+  if (w < 1024 && w > 600 && !isLandscape) return "rotate"; // tablet portrait
+  return "unsupported";
+});
+
+useEffect(() => {
+  const check = () => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const isLandscape = w > h;
+    if (w >= 1024 && isLandscape) setScreenStatus("ok");
+    else if (w >= 600 && !isLandscape) setScreenStatus("rotate");
+    else setScreenStatus("unsupported");
+  };
+  window.addEventListener("resize", check);
+  window.addEventListener("orientationchange", check);
+  return () => {
+    window.removeEventListener("resize", check);
+    window.removeEventListener("orientationchange", check);
+  };
+}, []);
+
   return (
-    <>
-      <AnimatePresence>
-        {stage === "entry" && (
-          <EntryScreen onEnter={handleEnter} />
-        )}
-      </AnimatePresence>
+  <>
+    {screenStatus !== "ok" ? (
+      <UnsupportedScreen isRotate={screenStatus === "rotate"} />
+    ) : (
+      <>
+        <AnimatePresence>
+          {stage === "entry" && (
+            <EntryScreen onEnter={handleEnter} />
+          )}
+        </AnimatePresence>
 
-      <AnimatePresence>
-        {stage === "loading" && (
-          <LoadingOverlay onRevealComplete={() => setStage("ready")} />
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {stage === "loading" && (
+            <LoadingOverlay onRevealComplete={() => setStage("ready")} />
+          )}
+        </AnimatePresence>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: stage === "ready" ? 1 : 0 }}
-        transition={{ duration: 2.8, ease: "easeOut", delay: 0 }}
-      >
-        <Navbar />
-        <HeroSection />
-      </motion.div>
-    </>
-  );
+        <motion.div
+          className="hero-scale-root"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: stage === "ready" ? 1 : 0 }}
+          transition={{ duration: 2.8, ease: "easeOut", delay: 0 }}
+        >
+          <Navbar />
+          <HeroSection />
+        </motion.div>
+      </>
+    )}
+  </>
+);
 }
