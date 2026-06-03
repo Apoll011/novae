@@ -66,7 +66,7 @@ const CARDS_CONFIG = [
     size: { w: 300, h: 300 },
     zIndex: 2,
     labelPosition: "bottom",
-    labelOffset: 200,
+    labelOffset: 220,
     labelAlign: "left",
   },
   {
@@ -78,7 +78,7 @@ const CARDS_CONFIG = [
     link: "#projects",
     size: { w: 300, h: 380 },
     zIndex: 2,
-    labelOffset: 30,
+    labelOffset: 40,
     labelPosition: "top",
   },
   {
@@ -254,8 +254,8 @@ function FloatingCard({ card, index}) {
                 ...(card.labelPosition === "top"
                   ? { top: (card.labelOffset ?? 12), bottom: "auto" }
                   : { bottom: (card.labelOffset ?? 12), top: "auto" }),
-                left: "50%",
-                transform: "translateX(-50%)",
+                left: card.labelAlign === "left" ? "0%" : "50%",
+                transform: card.labelAlign === "left" ? "translateX(0%)" : "translateX(-50%)",
                 whiteSpace: "nowrap",
                 pointerEvents: "none",
                 zIndex: 60,
