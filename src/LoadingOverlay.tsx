@@ -197,7 +197,7 @@ function ParticleCanvas({
         const breathe = 0.5 + 0.5 * Math.sin(elapsed * 0.0025);
 
         ctx.globalAlpha = 0.06 + breathe * 0.05;
-        const grad = ctx.createRadialGradient(cx, cy - 100, 10, cx, cy, DISPLAY_SIZE * 0.9);
+        const grad = ctx.createRadialGradient(cx + 50, cy - -200, 10, cx, cy, DISPLAY_SIZE * 0.9);
         grad.addColorStop(0, "rgba(204,255,0,0.5)");
         grad.addColorStop(0.4, "rgba(204,255,0,0.15)");
         grad.addColorStop(1, "transparent");
@@ -344,7 +344,7 @@ export function LoadingOverlay({ onRevealComplete }: LoadingOverlayProps) {
             result.push({
               tx, ty, sx, sy, cpx, cpy,
               size: SAMPLE_STEP,
-              speed: 0.004 + Math.random() * 0.008,
+              speed: 0.005 + Math.random() * 0.010,
               r, g, b,
               delay: Math.floor(Math.random() * 25 + (dist / maxDist) * 25),
             });

@@ -652,7 +652,7 @@ export default function App() {
 });
 
   const handleEnter = () => {
-  const audio = new Audio("images/audio4.mp3");
+  const audio = new Audio("");
   audio.volume = 1.0;
   audio.play().catch(() => {});
   setStage("loading");
