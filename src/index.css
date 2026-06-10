@@ -10,21 +10,34 @@ body {
 
 /* ─── Tablet Landscape Scaling ──────────────────────────────── */
 
-/* Only apply on touch devices to avoid affecting PC browsers */
-@media (pointer: coarse) and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
-  .hero-scale-root {
-    transform: scale(0.78);
-    transform-origin: top left;
-    width: calc(100vw / 0.78);
-    height: calc(100vh / 0.78);
-  }
+.hero-scale-root {
+  width: 100vw;
+  height: 100vh;
+  transform-origin: top left;
 }
 
 @media (pointer: coarse) and (min-width: 1024px) and (max-width: 1180px) and (orientation: landscape) {
   .hero-scale-root {
-    transform: scale(0.68);
+    width: 1920px;
+    height: 1080px;
+    transform: scale(var(--tablet-scale));
     transform-origin: top left;
-    width: calc(100vw / 0.68);
-    height: calc(100vh / 0.68);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50% 0;
+  }
+}
+
+@media (pointer: coarse) and (min-width: 1181px) and (max-width: 1366px) and (orientation: landscape) {
+  .hero-scale-root {
+    width: 1920px;
+    height: 1080px;
+    transform: scale(var(--tablet-scale));
+    transform-origin: top left;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50% 0;
   }
 }

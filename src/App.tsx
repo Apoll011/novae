@@ -646,14 +646,16 @@ export function HeroSection() {
 }
 
 export default function App() {
-  const [stage, setStage] = useState<"entry" | "loading" | "ready">("entry");
+  const [stage, setStage] = useState<"entry" | "loading" | "ready">(() => {
+  return sessionStorage.getItem("novae_animated") === "true" ? "ready" : "entry";
+});
 
   const handleEnter = () => {
-    const audio = new Audio("");
-    audio.volume = 1.0;
-    audio.play().catch(() => {});
-    setStage("loading");
-  };
+  const audio = new Audio("images/audio4.mp3");
+  audio.volume = 1.0;
+  audio.play().catch(() => {});
+  setStage("loading");
+};
 
   const [screenStatus, setScreenStatus] = useState<"ok" | "unsupported" | "rotate">(() => {
   const w = window.innerWidth;
@@ -681,6 +683,22 @@ useEffect(() => {
   };
 }, []);
 
+useEffect(() => {
+  const setScale = () => {
+    const scaleX = window.innerWidth / 1920;
+    const scaleY = window.innerHeight / 1080;
+    const scale = Math.min(scaleX, scaleY);
+    document.documentElement.style.setProperty("--tablet-scale", String(scale));
+  };
+  setScale();
+  window.addEventListener("resize", setScale);
+  window.addEventListener("orientationchange", setScale);
+  return () => {
+    window.removeEventListener("resize", setScale);
+    window.removeEventListener("orientationchange", setScale);
+  };
+}, []);
+
   return (
   <>
     {screenStatus !== "ok" ? (
@@ -695,19 +713,24 @@ useEffect(() => {
 
         <AnimatePresence>
           {stage === "loading" && (
-            <LoadingOverlay onRevealComplete={() => setStage("ready")} />
+            <LoadingOverlay onRevealComplete={() => {
+  sessionStorage.setItem("novae_animated", "true");
+  setStage("ready");
+}} />
           )}
         </AnimatePresence>
 
         <motion.div
-          className="hero-scale-root"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: stage === "ready" ? 1 : 0 }}
-          transition={{ duration: 2.8, ease: "easeOut", delay: 0 }}
-        >
-          <Navbar />
-          <HeroSection />
-        </motion.div>
+  initial={{ opacity: 0 }}
+  animate={{ opacity: stage === "ready" ? 1 : 0 }}
+  transition={{ duration: 2.8, ease: "easeOut", delay: 0 }}
+  style={{ width: "100vw", height: "100vh", overflow: "hidden" }}
+>
+  <div className="hero-scale-root">
+    <Navbar />
+    <HeroSection />
+  </div>
+</motion.div>
       </>
     )}
   </>
