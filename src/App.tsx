@@ -60,7 +60,7 @@ const CARDS_CONFIG = [
     id: "c6",
     label: "Knowledge Base",
     image: "images/folder3.png",
-    position: { bottom: "-18%", right: "-3%" },
+    position: { bottom: "-14%", right: "-2%" },
     rotation: 20,
     link: "#knowledge-base",
     size: { w: 300, h: 300 },
@@ -72,7 +72,7 @@ const CARDS_CONFIG = [
   {
     id: "c4",
     label: "Projects",
-    image: "images/notebook5.png",
+    image: "images/notebook6.png",
     position: { bottom: "-16%", right: "15%" },
     rotation: -7,
     link: "#projects",
@@ -652,7 +652,7 @@ export default function App() {
 });
 
   const handleEnter = () => {
-  const audio = new Audio("");
+  const audio = new Audio("images/audio.mp3");
   audio.volume = 1.0;
   audio.play().catch(() => {});
   setStage("loading");

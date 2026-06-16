@@ -344,7 +344,7 @@ export function LoadingOverlay({ onRevealComplete }: LoadingOverlayProps) {
             result.push({
               tx, ty, sx, sy, cpx, cpy,
               size: SAMPLE_STEP,
-              speed: 0.005 + Math.random() * 0.010,
+              speed: 0.006 + Math.random() * 0.012,
               r, g, b,
               delay: Math.floor(Math.random() * 25 + (dist / maxDist) * 25),
             });
