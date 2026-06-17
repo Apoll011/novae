@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { LoadingOverlay } from "./LoadingOverlay";
 import { EntryScreen } from "./EntryScreen";
 import { UnsupportedScreen } from "./UnsupportedScreen";
+import { MobileHero } from "./MobileHero";
 
  
 const CARDS_CONFIG = [
@@ -740,9 +741,27 @@ export default function App() {
   const h = window.innerHeight;
   const isLandscape = w > h;
   if (w >= 1024 && isLandscape) return "ok";
-  if (w < 1024 && w > 600 && !isLandscape) return "rotate"; // tablet portrait
+  if (w < 768 && h > w) return "ok"; // mobile portrait allowed
+  if (w < 1024 && w > 600 && !isLandscape) return "rotate";
   return "unsupported";
 });
+
+const [isMobile, setIsMobile] = useState(false);
+
+useEffect(() => {
+  const checkMobile = () => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    setIsMobile(h > w && w < 768);
+  };
+  checkMobile();
+  window.addEventListener("resize", checkMobile);
+  window.addEventListener("orientationchange", () => setTimeout(checkMobile, 150));
+  return () => {
+    window.removeEventListener("resize", checkMobile);
+    window.removeEventListener("orientationchange", checkMobile);
+  };
+}, []);
 
 useEffect(() => {
   const check = () => {
@@ -750,6 +769,7 @@ useEffect(() => {
     const h = window.innerHeight;
     const isLandscape = w > h;
     if (w >= 1024 && isLandscape) setScreenStatus("ok");
+    else if (w < 768 && h > w) setScreenStatus("ok");
     else if (w >= 600 && !isLandscape) setScreenStatus("rotate");
     else setScreenStatus("unsupported");
   };
@@ -790,9 +810,13 @@ useEffect(() => {
   style={{ width: "100vw", height: "100vh", overflow: "hidden" }}
 >
   <div className="hero-scale-root">
-    <Navbar />
-    <HeroSection />
-  </div>
+  {isMobile ? <MobileHero /> : (
+    <>
+      <Navbar />
+      <HeroSection />
+    </>
+  )}
+</div>
 </motion.div>
       </>
     )}
