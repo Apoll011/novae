@@ -221,23 +221,7 @@ function ParticleCanvas({
         }
       }
 
-      // ─── Shockwave rings ───
-      for (let i = shockwaves.length - 1; i >= 0; i--) {
-        const sw = shockwaves[i];
-        sw.progress += 0.01;
-        if (sw.progress >= 1) {
-          shockwaves.splice(i, 1);
-          continue;
-        }
-        const radius = 30 + sw.progress * DISPLAY_SIZE * 1.5;
-        const alpha = (1 - sw.progress) * 0.5;
-        ctx.globalAlpha = alpha;
-        ctx.strokeStyle = "#ccff00";
-        ctx.lineWidth = 1.5 * (1 - sw.progress);
-        ctx.beginPath();
-        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-        ctx.stroke();
-      }
+
 
       ctx.globalAlpha = 1;
 
@@ -344,7 +328,7 @@ export function LoadingOverlay({ onRevealComplete }: LoadingOverlayProps) {
             result.push({
               tx, ty, sx, sy, cpx, cpy,
               size: SAMPLE_STEP,
-              speed: 0.005 + Math.random() * 0.011,
+              speed: 0.007 + Math.random() * 0.014,
               r, g, b,
               delay: Math.floor(Math.random() * 25 + (dist / maxDist) * 25),
             });

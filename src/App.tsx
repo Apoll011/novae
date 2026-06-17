@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "motion/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { LoadingOverlay } from "./LoadingOverlay";
 import { EntryScreen } from "./EntryScreen";
 import { UnsupportedScreen } from "./UnsupportedScreen";
@@ -22,13 +22,13 @@ const CARDS_CONFIG = [
     id: "c2",
     label: "NOVAe",
     image: "images/novae.png",
-    position: { top: "14%", left: "31%" },
+    position: { top: "14%", left: "33%" },
     rotation: 15,
     link: "#novae",
-    size: { w: 490, h: 400 },
+    size: { w: 440, h: 350 },
     zIndex: 2,
     labelPosition: "top",
-    labelOffset: 60,
+    labelOffset: 30,
 
   },
   {
@@ -47,8 +47,8 @@ const CARDS_CONFIG = [
   {
     id: "c5",
     label: "Meet the Team",
-    image: "images/team.png",
-    position: { bottom: "40%", left: "74%" },
+    image: "images/team4.png",
+    position: { bottom: "38%", left: "74%" },
     rotation: 10,
     link: "#team",
     size: { w: 360, h: 270 },
@@ -59,7 +59,7 @@ const CARDS_CONFIG = [
   {
     id: "c6",
     label: "Knowledge Base",
-    image: "images/folder7.png",
+    image: "images/folder.png",
     position: { bottom: "-14%", right: "-2%" },
     rotation: 20,
     link: "#knowledge-base",
@@ -72,7 +72,7 @@ const CARDS_CONFIG = [
   {
     id: "c4",
     label: "Projects",
-    image: "images/notebook6.png",
+    image: "images/notebook.png",
     position: { bottom: "-16%", right: "15%" },
     rotation: -7,
     link: "#projects",
@@ -85,7 +85,7 @@ const CARDS_CONFIG = [
     id: "c7",
     label: "Current Project",
     image: "images/note5.png",
-    position: { bottom: "43%", right: "21%" },
+    position: { bottom: "57%", right: "25%" },
     rotation: 10,
     link: "#current-project",
     size: { w: 195, h: 195 },
@@ -118,7 +118,7 @@ function NavLink({ label, href }: { label: string; href: string }) {
         fontWeight: 400,
         letterSpacing: "0.08em",
         textTransform: "uppercase",
-        color: hovered ? "#ccff00" : "rgba(255,255,255,0.55)",
+        color: hovered ? "#B8D10D" : "rgba(255,255,255,0.55)",
         transition: "color 0.22s ease",
         textDecoration: "none",
         paddingBottom: 4,
@@ -208,8 +208,6 @@ function FloatingCard({ card, index}) {
         style={{
           width: "100%",
           height: "100%",
-          
-          
           position: "relative",
           cursor: "pointer",
         }}
@@ -230,15 +228,13 @@ function FloatingCard({ card, index}) {
     objectFit: "contain",
     pointerEvents: "auto",
     filter: isHovered
-      ? "drop-shadow(-7px 8px 10px rgba(0,0,0,0.70)) drop-shadow(-3px 3px 4px rgba(0,0,0,0.50))"
-      : "drop-shadow(-12px 20px 10px rgba(0,0,0,0.85)) drop-shadow(-3px 3px 4px rgba(0,0,0,0.50))",
+      ? "drop-shadow(-5px 6px 8px rgba(15,12,8,0.40)) drop-shadow(-2px 3px 3px rgba(15,12,8,0.28))"
+      : "drop-shadow(-8px 14px 9px rgba(15,12,8,0.55)) drop-shadow(-2px 4px 3px rgba(15,12,8,0.35))",
     transition: "filter 0.4s ease",
   }}
+  
 />
  
-       
-
-
       </motion.div>
  
       {/* Floating label */}
@@ -295,6 +291,92 @@ function FloatingCard({ card, index}) {
     </motion.a>
   );
 }
+
+interface RepelCardConfig {
+  id: string;
+  image: string;
+  position: { top?: string; bottom?: string; left?: string; right?: string };
+  rotation: number;
+  size: { w: number; h: number };
+  zIndex: number;
+}
+
+const REPEL_CARDS_CONFIG: RepelCardConfig[] = [
+  {
+    id: "r1",
+    image: "images/pencil.png",
+    position: { top: "35%", left: "4%" },
+    rotation: 60,
+    size: { w: 400, h: 400 },
+    zIndex: 5,
+  },
+  {
+    id: "r2",
+    image: "images/paper_clips.png",
+    position: { top: "70%", left: "20%" },
+    rotation: -8,
+    size: { w: 180, h: 180 },
+    zIndex: 5,
+  },
+];
+
+function RepelCard({ card }: { card: RepelCardConfig }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const dx = centerX - e.clientX;
+    const dy = centerY - e.clientY;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+    const strength = 18;
+    const moveX = (dx / dist) * strength;
+    const moveY = (dy / dist) * strength;
+
+    setOffset({ x: moveX, y: moveY });
+  };
+
+  const handleMouseLeave = () => {
+    setOffset({ x: 0, y: 0 });
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      animate={{ x: offset.x, y: offset.y }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      style={{
+        position: "absolute",
+        width: card.size.w,
+        height: card.size.h,
+        zIndex: card.zIndex,
+        rotate: `${card.rotation}deg`,
+        ...card.position,
+        pointerEvents: "auto",
+      }}
+    >
+      <img
+        src={card.image}
+        alt=""
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+          pointerEvents: "none",
+          filter: "drop-shadow(-7px 8px 10px rgba(0,0,0,0.65)) drop-shadow(-3px 3px 4px rgba(0,0,0,0.40))",
+        }}
+      />
+    </motion.div>
+  );
+}
  
 export function HeroSection() {
   return (
@@ -312,7 +394,7 @@ export function HeroSection() {
       <div style={{
   position: "absolute",
   inset: 0,
-  background: "url('images/background.png')",
+  background: "url('images/background4.png')",
   zIndex: 0,
   backgroundSize: "100% 100%",
   backgroundPosition: "center",
@@ -333,7 +415,7 @@ export function HeroSection() {
  
  
    <motion.img
-  src="images/slogan3.png"
+  src="images/logo_slogan.png"
   alt="BUILD SOMETHING"
   initial={{ opacity: 0, y: -10 }}
   animate={{ opacity: 1, y: 0 }}
@@ -402,32 +484,27 @@ export function HeroSection() {
       
  
       {/* Floating cards */}
-      <div className="hero-content" style={{ position: "absolute", inset: 0, zIndex: 10 }}>
-        {CARDS_CONFIG.map((card, i) => (
-          <FloatingCard key={card.id} card={card} index={i} />
-        ))}
-      </div>
+<div className="hero-content" style={{ position: "absolute", inset: 0, zIndex: 10 }}>
+  {CARDS_CONFIG.map((card, i) => (
+    <FloatingCard key={card.id} card={card} index={i} />
+  ))}
+  {REPEL_CARDS_CONFIG.map((card) => (
+    <RepelCard key={card.id} card={card} />
+  ))}
+</div>
+
+{/* Center ambient glow */}
+<div style={{
+  position: "absolute",
+  top: "50%", left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 600, height: 300,
+  background: "radial-gradient(ellipse, rgba(120, 80, 200, 0.06) 0%, transparent 70%)",
+  zIndex: 2,
+  pointerEvents: "none",
+}} />
  
-      {/* Center ambient glow */}
-      <div style={{
-        position: "absolute",
-        top: "50%", left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: 600, height: 300,
-        background: "radial-gradient(ellipse, rgba(120, 80, 200, 0.06) 0%, transparent 70%)",
-        zIndex: 2,
-        pointerEvents: "none",
-      }} />
- 
-      {/* Bottom fade */}
-      <div style={{
-        position: "absolute",
-        bottom: 0, left: 0, right: 0,
-        height: "25%",
-        background: "linear-gradient(to top, rgba(8,8,8,0.8) 0%, transparent 100%)",
-        zIndex: 8,
-        pointerEvents: "none",
-      }} />
+      
  
       {/* Top fade for navbar blending */}
       <div style={{
@@ -482,22 +559,23 @@ export function HeroSection() {
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 1.0, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
   style={{
-    position: "absolute",
-    bottom: 20,
-    left: 20,
-    zIndex: 20,
-    width: 240,
-    backdropFilter: "blur(2px) saturate(1.4)",
-    WebkitBackdropFilter: "blur(24px) saturate(1.4)",
-    background: "rgba(255,255,255,0.08)",
-    border: "0.5px solid rgba(255,255,255,0.14)",
-    borderRadius: 20,
-    padding: "24px 20px",
-    pointerEvents: "auto",
-    display: "flex",
-    flexDirection: "column",
-    gap: 16,
-  }}
+  position: "absolute",
+  bottom: 20,
+  left: 20,
+  zIndex: 20,
+  width: 240,
+  backdropFilter: "blur(28px) saturate(1.6) brightness(1.08)",
+  WebkitBackdropFilter: "blur(28px) saturate(1.6) brightness(1.08)",
+  background: "linear-gradient(160deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 100%)",
+  border: "0.5px solid rgba(255,255,255,0.20)",
+  borderRadius: 20,
+  padding: "24px 20px",
+  pointerEvents: "auto",
+  display: "flex",
+  flexDirection: "column",
+  gap: 16,
+  boxShadow: "0 24px 48px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15)",
+}}
 >
   {/* Event CTA */}
   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -651,7 +729,7 @@ export default function App() {
 });
 
   const handleEnter = () => {
-  const audio = new Audio("images/audio.mp3");
+  const audio = new Audio("images/");
   audio.volume = 1.0;
   audio.play().catch(() => {});
   setStage("loading");
