@@ -761,59 +761,6 @@ useEffect(() => {
   };
 }, []);
 
-useEffect(() => {
-  const DESIGN_WIDTH = 1920;
-  const DESIGN_HEIGHT = 1080;
-
-  const applyScale = () => {
-    const root = document.querySelector(".hero-scale-root") as HTMLElement;
-    if (!root) return;
-
-    const screenW = window.innerWidth;
-    const screenH = window.innerHeight;
-    const isLandscape = screenW > screenH;
-
-    if (screenW >= DESIGN_WIDTH) {
-      root.style.width = "100vw";
-      root.style.height = "100vh";
-      root.style.transform = "none";
-      root.style.position = "relative";
-      root.style.top = "auto";
-      root.style.left = "auto";
-      return;
-    }
-
-    if (isLandscape && screenW >= 768) {
-      const scale = screenW / DESIGN_WIDTH;
-      const scaledHeight = DESIGN_HEIGHT * scale;
-
-      root.style.width = `${DESIGN_WIDTH}px`;
-      root.style.height = `${DESIGN_HEIGHT}px`;
-      root.style.transform = `scale(${scale})`;
-      root.style.transformOrigin = "top left";
-      root.style.position = "absolute";
-      root.style.top = `${(screenH - scaledHeight) / 2}px`;
-      root.style.left = "0px";
-    } else {
-      root.style.width = "100vw";
-      root.style.height = "100vh";
-      root.style.transform = "none";
-      root.style.position = "relative";
-      root.style.top = "auto";
-      root.style.left = "auto";
-    }
-  };
-
-  const raf = requestAnimationFrame(applyScale);
-  window.addEventListener("resize", applyScale);
-  window.addEventListener("orientationchange", () => setTimeout(applyScale, 200));
-
-  return () => {
-    cancelAnimationFrame(raf);
-    window.removeEventListener("resize", applyScale);
-    window.removeEventListener("orientationchange", applyScale);
-  };
-}, [screenStatus]);
 
   return (
   <>
