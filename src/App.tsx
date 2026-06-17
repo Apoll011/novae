@@ -59,7 +59,7 @@ const CARDS_CONFIG = [
   {
     id: "c6",
     label: "Knowledge Base",
-    image: "images/folder3.png",
+    image: "images/folder7.png",
     position: { bottom: "-14%", right: "-2%" },
     rotation: 20,
     link: "#knowledge-base",
@@ -84,7 +84,7 @@ const CARDS_CONFIG = [
   {
     id: "c7",
     label: "Current Project",
-    image: "images/note3.png",
+    image: "images/note5.png",
     position: { bottom: "43%", right: "21%" },
     rotation: 10,
     link: "#current-project",
@@ -99,7 +99,6 @@ const CARDS_CONFIG = [
 const NAV_LINKS = [
   { label: "About Us", href: "#novae" },
   { label: "Projects", href: "#projects" },
-  { label: "Partnerships", href: "#partnerships" },
   { label: "Team", href: "#team" },
   { label: "Newsletter", href: "#newsletter" },
   { label: "Knowledge Base", href: "#knowledge-base" },
@@ -156,7 +155,7 @@ export function Navbar() {
         zIndex: 100,
         display: "flex",
         alignItems: "center",
-        gap: 12,
+        gap: 16,
         pointerEvents: "auto",
       }}
     >
@@ -334,7 +333,7 @@ export function HeroSection() {
  
  
    <motion.img
-  src="images/slogan2.png"
+  src="images/slogan3.png"
   alt="BUILD SOMETHING"
   initial={{ opacity: 0, y: -10 }}
   animate={{ opacity: 1, y: 0 }}
@@ -488,7 +487,7 @@ export function HeroSection() {
     left: 20,
     zIndex: 20,
     width: 240,
-    backdropFilter: "blur(24px) saturate(1.4)",
+    backdropFilter: "blur(2px) saturate(1.4)",
     WebkitBackdropFilter: "blur(24px) saturate(1.4)",
     background: "rgba(255,255,255,0.08)",
     border: "0.5px solid rgba(255,255,255,0.14)",
@@ -554,7 +553,7 @@ export function HeroSection() {
           color: "rgba(255,255,255,0.40)",
           margin: 0,
         }}>
-          November · Unicorn Factory
+          November
         </p>
       </div>
     </div>
@@ -699,7 +698,7 @@ useEffect(() => {
       const scale = screenW / 1920;
 
       root.style.width = "1920px";
-      root.style.height = `${screenH / scale}px`;
+      root.style.height = "1080px";
       root.style.transform = `scale(${scale})`;
       root.style.transformOrigin = "top left";
       root.style.position = "absolute";
